@@ -3,10 +3,11 @@ class login():
         self.id = id
         self.pas = pas
 
-    def check(self, id, pas):
-        print (self.id)
+    def check(self, id, pas, loggedIn):
         if self.id == id and self.pas == pas:
-            print ("Login success!")
+            loggedIn = True
+            return loggedIn
+        else: return False
 
 class Item(object):
     def __init__(self, unq_id, name, price, category, description, qty):
@@ -29,12 +30,10 @@ class Cart(object):
             if k == 'unq_id':
                 continue
             elif k == 'qty':
-                #total_qty = v.qty + item.qty
-                total_qty = quantity
-                print (total_qty)
-                #if total_qty:
-                #    v.qty = total_qty
-                #    continue
+                total_qty = v.qty + item.qty
+                if total_qty:
+                    v.qty = total_qty
+                    continue
                 self.remove_item(k)
             else:
                 print (quantity)
@@ -46,14 +45,17 @@ class Cart(object):
     def get_num_items(self):
         return sum([v.qty for _, v in self.content.items()])
 
-    def remove_item(self, key):
+    def remove_item(self, key, quantity):
+        print(key)
         self.content.pop(key)
 
 
 if __name__ == '__main__':
+    loggedIn = False
     log = login("admin", "admin")
-    log.check(input("Enter Login ID:"),
-              input("Enter password: "))
+    while (loggedIn != True):
+        loggedIn = log.check(input("Enter Login ID:"),
+              input("Enter password: "), loggedIn)
 
     item1 = Item(1, "Chair", 5.76, "household items", "A wooden chair", 15)
     item2 = Item(2, "Desk", 8.24, "household items", "A wooden desk", 10)
@@ -68,9 +70,7 @@ if __name__ == '__main__':
     itemList2 = [item1, item2, item3, item4, item5, item6, item7, item8]
     cart = Cart()
 
-    loggedin = True
-
-    if (loggedin == False):
+    if (loggedIn == False):
         print("Please log in")
     else:
 
@@ -101,19 +101,23 @@ if __name__ == '__main__':
                 add_item = input("which item would you like to add?")
                 if add_item in itemList:
                     quantity = input("how many?")
-                    cart.addToCart(item1, quantity)
+                    cart.addToCart(itemList2[itemList.index(add_item)], quantity)
                 else: print("Please type item name")
 
             elif (answer == "3"):
                 remove_item = input("Which item would you like to remove?")
                 if add_item in itemList:
-                    cart.remove_item(itemList.index(add_item)+1)
+                    quantity = input("how many?")
+                    cart.remove_item(itemList.index(add_item)+1, quantity)
 
             elif (answer == "4"):
                 print("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
 
             elif (answer == "5"):
-                print("Purchase")
+                creditCard = input("add credit card for purchase")
+                confirm = input("Are you sure you want to purchase (y/n)")
+                if confirm == "y":
+                    print("than you for your purchase")
 
             elif (answer == "6"):
                 print("""What would you like to do?
