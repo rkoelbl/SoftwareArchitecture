@@ -1,16 +1,23 @@
+# User class
 class login():
+
+	# Create new user with username and password
     def __init__(self, id, pas):
         self.id = id
         self.pas = pas
 
+	# Login as user
     def check(self, id, pas):
         print (self.id)
         if self.id == id and self.pas == pas:
             print ("Login success!")
 
 
-
+# Item class
 class Item(object):
+
+	# Create new item with an ID number, a name, a price, a category, a description, and a quantity
+	# Of these attributes, only the price and quantity can be modified after initialization
     def __init__(self, unq_id, name, price, category, description, qty):
         self.unq_id = unq_id
         self.product_name = name
@@ -19,11 +26,15 @@ class Item(object):
         self.description = description
         self.qty = qty
 
-
+# Cart class
 class Cart(object):
+
+	# Create a cart for the user and initialize a dictionary to store items held in the cart
     def __init__(self):
         self.content = dict()
 
+	# Add a new item to the cart
+	# Can add in bulk, but cannot exceed current quantity for the selected item
     def update(self, item):
         if item.unq_id not in self.content:
             self.content.update({item.unq_id: item})
@@ -40,15 +51,18 @@ class Cart(object):
             else:
                 v[k] = item[k]
 
+	# Calculate the total cost of all items in the cart by going through the list and getting the sum
     def getTotal(self):
         total = 0
         for item in self.list:
             name, price = item  # or price = item[1]
             total = total + price
 
+	# Return the total number of items in the cart
     def get_num_items(self):
         return sum([v.qty for _, v in self.content.items()])
 
+	# Remove an item from the cart
     def remove_item(self, key):
         self.content.pop(key)
 
