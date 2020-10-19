@@ -5,7 +5,7 @@ class login():
 
     def check(self, id, pas):
         print (self.id)
-        if self.id == id and self.pas == pas
+        if self.id == id and self.pas == pas:
             print ("Login success!")
 
 class Item(object):
@@ -21,7 +21,7 @@ class Cart(object):
     def __init__(self):
         self.content = dict()
 
-    def update(self, item):
+    def addToCart(self, item, quantity):
         if item.unq_id not in self.content:
             self.content.update({item.unq_id: item})
             return
@@ -29,12 +29,15 @@ class Cart(object):
             if k == 'unq_id':
                 continue
             elif k == 'qty':
-                total_qty = v.qty + item.qty
-                if total_qty:
-                    v.qty = total_qty
-                    continue
+                #total_qty = v.qty + item.qty
+                total_qty = quantity
+                print (total_qty)
+                #if total_qty:
+                #    v.qty = total_qty
+                #    continue
                 self.remove_item(k)
             else:
+                print (quantity)
                 v[k] = item[k]
 
     def get_total(self):
@@ -62,7 +65,9 @@ if __name__ == '__main__':
     item8 = Item(8, "LED lights", 12.15, "small electronics", "Strip of LED lights", 42)
 
     itemList = ["Chair", "Desk", "Great Expectations", "Fahrenheit 451", "Lego Set", "Pikachu Plush", "RC car", "LED lights"]
+    itemList2 = [item1, item2, item3, item4, item5, item6, item7, item8]
     cart = Cart()
+
     loggedin = True
 
     if (loggedin == False):
@@ -96,14 +101,16 @@ if __name__ == '__main__':
                 add_item = input("which item would you like to add?")
                 if add_item in itemList:
                     quantity = input("how many?")
-
+                    cart.addToCart(item1, quantity)
                 else: print("Please type item name")
 
             elif (answer == "3"):
-                print("Remove from cart function")
+                remove_item = input("Which item would you like to remove?")
+                if add_item in itemList:
+                    cart.remove_item(itemList.index(add_item)+1)
 
             elif (answer == "4"):
-                print("View cart")
+                print("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
 
             elif (answer == "5"):
                 print("Purchase")
@@ -141,14 +148,11 @@ if __name__ == '__main__':
           7) Log out""")
             answer = input("> ")
 
-
-    input("Enter item you would like to add:")
-    input("Enter quantity")
-    cart.update(item1)
-    cart.update(item2)
-    cart.update(item3)
-    print("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
-    cart.remove_item(1)
-    print ("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
+    #cart.update(item1)
+    #cart.update(item2)
+    #cart.update(item3)
+    #print("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
+    #cart.remove_item(1)
+    #print ("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
 
 
