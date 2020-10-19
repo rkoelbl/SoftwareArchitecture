@@ -153,6 +153,6 @@ if __name__ == '__main__':
     cart.addToCart(item1)
     cart.addToCart(item2)
     cart.addToCart(item3)
-    print("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
+    print("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.getTotal()))
     cart.removeFromCart(1)
-    print ("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.get_total()))
+    print ("You have %i items in your cart for a total of $%.02f" % (cart.get_num_items(), cart.getTotal()))
